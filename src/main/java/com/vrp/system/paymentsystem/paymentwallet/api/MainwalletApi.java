@@ -39,14 +39,15 @@ public class MainwalletApi {
         throw new RuntimeException("Get Operation is supported");
     }
 
-    @GetMapping(value = "/api/v1/getBalances",produces = MediaType.APPLICATION_JSON_VALUE)
+   /* @GetMapping(value = "/api/v1/getBalances",produces = MediaType.APPLICATION_JSON_VALUE)
     public Page<WalletEntry> getBalances(){
         PageRequest pageable=PageRequest.of(1,10);
         return paymentWalletService.getPage(pageable);
-    }
+    } */
 
     @GetMapping(value = "/api/v1/getBalances",produces = MediaType.APPLICATION_JSON_VALUE)
-    public Page<WalletEntry> getBalances(@RequestParam("page") Integer p) {
+    public Page<WalletEntry> getBalancesPerPage(@RequestParam("page") Integer p) {
+        p=p==null?0:p;
         PageRequest pageable = PageRequest.of(p, 10);
         return paymentWalletService.getPage(pageable);
     }

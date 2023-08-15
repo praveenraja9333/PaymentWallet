@@ -19,11 +19,14 @@ public class WalletEntry {
     public int id;
     @Column
     @NotNull(message="userinfo should not be null")
-    @NotBlank(message="Blank object are not allowed for userinfo, Should be a valid name or id of the user")
     public UUID checkoutId;
     @Column
+    @NotNull(message="Buyer id should not be null")
+    @NotBlank(message="Buyer id should not be blank")
     private String userInfo;
     @Column
+    @NotNull(message="Buyer id should not be null")
+    @NotBlank(message="Buyer id should not be blank")
     private String currencycode;
     @Column
     private  double balance;
@@ -100,9 +103,9 @@ public class WalletEntry {
         @Override
         public WalletEntry build() {
             WalletEntry walletEntry=new WalletEntry();
-            walletEntry.setCheckoutId(requireNonNull(this.checkoutId));
-            walletEntry.setUserInfo(requireNonNull(this.userInfo));
-            walletEntry.setCurrencycode(requireNonNull(this.currencycode));
+            walletEntry.setCheckoutId(this.checkoutId);
+            walletEntry.setUserInfo(this.userInfo);
+            walletEntry.setCurrencycode(this.currencycode);
             walletEntry.setBalance(this.balance);
             return walletEntry;
         }

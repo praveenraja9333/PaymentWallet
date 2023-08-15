@@ -23,14 +23,14 @@ public class PaymentWalletService {
 
     public int postOrder(Order order){
             List<PaymentOrder> list=order.getPaymentOrderList();
-            if(paymentWalletDao.existsById(order.getCheckoutid())){
+            if(paymentWalletDao.findByUuid(order.getCheckoutid())>0){
                 throw new DuplicateTransactionException(" Checkout id "+order.getCheckoutid()+" already present in the System");
             }
             list.stream().forEach(po->{
                 try {
                     WalletEntry walletEntry= WalletEntry.newBuilder().setCheckoutId(order.getCheckoutid())
                             .setCurrencycode(order.getCurrencycode())
-                            .setUserInfo(po.getBuyername())
+                            .setUserInfo(po.getSellername())
                             .setBalance(format.parse(po.getAmount()).doubleValue())
                             .build();
                     paymentWalletDao.save(walletEntry);
